@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title> C.AI.R.A Education</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <style>
+    .tab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+      width: 100%;
+    }
+
+    p {
+      text-align: left;
+    }
+
+    .tab button {
+      background-color: #f1f1f1;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+    }
+
+    .tab button.active {
+      background-color: #ccc;
+    }
+
+    .tabcontent {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-top: none;
+      background-color: #C7F4F7;
+    }
+
+
+    /* Slideshow container */
+    .slideshow-container {
+      max-width: 1000px;
+      position: relative;
+      margin: auto;
+    }
+
+    .text {
+      color: #f2f2f2;
+      font-size: 15px;
+      padding: 12px 12px;
+      position: absolute;
+      bottom: 8px;
+      width: 100%;
+      text-align: center;
+    }
+
+
+
+    /* The dots/bullets/indicators */
+    .dot {
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    .active {
+      background-color: #717171;
+    }
+
+    /* Fading animation */
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+
+    .fade:not(.show) {
+      opacity: 1 !important;
+    }
+
+    /* Style the iframe container */
+    .pdf-container {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-fluid p-5 text-center">
+    <h1><b> C.AI.R.A Education</b></h1>
+    <div class="container">
+      <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Tab1')" id="defaultOpen">Home</button>
+        <button class="tablinks" onclick="openTab(event, 'Tab3')"> Hijr Calender</button>
+        <button class="tablinks" onclick="openTab(event, 'Tab4')">Generate Lesson plan</button>
+      </div>
+
+      <div id="Tab1" class="tabcontent">
+
+        <p>Insights of the Website:</p>
+
+        <div class="slideshow-container">
+
+          <div class="mySlides fade">
+            <img src="Image 1.png" alt="Image 1" style="height: 400px;width: 500px;">
+            <div class="text">Classes Generated</div>
+          </div>
+
+          <div class="mySlides fade">
+            <img src="Image 2.png" style="height:300px;width:500px;">
+            <div class="text">AI Powered Computing System</div>
+          </div>
+
+          <div class="mySlides fade">
+            <img src="Image 3.png" style="height:300px;width:500px;">
+            <div class="text">Education System is bad</div>
+          </div>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <div id="Tab2" class="tabcontent">
+        <h3>Hadith</h3>
+        <div class="pdf-container">
+          <iframe src="The-Complete-Hadith.pdf" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+      </div>
+
+      <div id="Tab3" class="tabcontent">
+        <div class="pdf-container">
+          <iframe src="Monthly Islamic Calendar.pdf" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+      </div>
+
+      <div id="Tab4" class="tabcontent">
+
+
+        <h1>Lesson Plan Generator</h1>
+
+
+        <div class="row" style="padding: 2%;">
+          <div class="form-group row">
+            <label for="subject" class="col-sm-2 col-form-label">Subject:</label>
+            <div class="col-sm-10">
+              <input type="text" class="col-sm-6 form-control" style="width: 50%;" id="subject" name="subject">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="grade-level" class="col-sm-2 col-form-label">Grade Lavel:</label>
+            <div class="col-md-3">
+            <select id="grade-level" class="form-control" aria-placeholder="slect grade">
+              <option value="2">2</option>
+              <option value="4">4</option>
+              <option value="6">6</option>
+              <option value="8">8</option>
+              <option value="10">10</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          </div>
+          <div class="col-md-12">
+            <br />
+            <button class="btn btn-success" type="submit" onclick="search()"> Generate Lesson Plan</button>
+
+          </div>
+
+          <div class="col-md-12">
+            <br />
+          
+
+            <div class="form-group row">
+              <label for="userMessage" class="col-sm-2 col-form-label">Enter your message:</label>
+              <div class="col-sm-6">
+                <input type="text" id="userMessage" name="userMessage" class="col-sm-6 form-control" style="width: 50%;">
+              </div>
+              <div class="col-sm-12">
+                <br/>
+                <button class="btn btn-success" type="button" onclick="generateResponse()">Generate GPT Response</button>
+              </div>
+            </div>
+            <div class="col-sm-12" style=" border: 1px solid black;padding: 2%;margin-top: 2%;" id="response"></div>
+            
+          </div>
+
+          <p id="myParagraph"></p>
+
+          <div id="lesson-plan-result" class="row" style="margin-top: 5%;">
+
+
+            <div class="pdf-container">
+              <iframe id="pdfFrame" frameborder="0" width="100%" height="100%"></iframe>
+            </div>
+
+            <div style="margin-top: 10%;">
+              <iframe id="youtube-video" width="800" height="450" frameborder="0" allowfullscreen></iframe>
+
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="row" style="padding: 2%;">
+          <div id="hima" class="">
+            <h3>So, What are Carbon emissions?</h3>
+            <br />
+            <br />
+            <p>Carbon emissions refer to the release of carbon dioxide (CO2) and other greenhouse gases into the
+              atmosphere. These emissions primarily come from burning fossil fuels such as coal, oil, and natural gas,
+              as well as from deforestation and industrial activities.</p>
+
+            <p>Common activities such as transportation, electricity generation, and industrial processes are the main
+              causes</p>
+            <p>When carbon emissions accumulate in the atmosphere, they trap heat and contribute to global warming,
+              leading to changes in weather patterns, rising sea levels, and the loss of biodiversity. You can provide
+              simple and clear examples to help students understand these effects, such as melting glaciers or extreme
+              weather events.</p>
+            <p> Islam teaches Muslims to be responsible caretakers of the Earth</p>
+            <p>The concept of <b>"Hima" (environmental protection) </b> encourages the preservation and responsible
+              use of natural resources, including water, land, and wildlife.
+            </p>
+            <p>Surah Ar-Rum (30:41) states that "Corruption has appeared throughout the land and sea by [reason of] what
+              the hands of people have earned so He may let them taste part of [the consequence of] what they have done
+              that perhaps they will return [to righteousness]."</p>
+            <p>Muslims are considered trustees of the Earth, entrusted by Allah with the responsibility to care for and
+              protect the environment.Islam calls for a holistic approach to environmental sustainability, intertwining
+              ethical, social, and spiritual dimensions.</p>
+
+            <p>Islamic scholars like Ibn al-Jawzi and Ibn al-Qayyim stressed the importance of preserving the
+              environment and treating animals with kindness. Highlight their teachings to show that environmental
+              stewardship is deeply rooted in Islamic tradition.
+            </p>
+            <p>Recycling carbon emissions involves taking proactive steps to reduce and offset the release of carbon
+              dioxide and other greenhouse gases into the atmosphere. It focuses on practices that help minimize carbon
+              emissions and promote sustainable alternatives.
+            </p>
+
+            <br />
+            <p> Here are various methods of recycling carbon emissions in Islam.
+            </p>
+            <p> a) Tree Plantation: Trees absorb carbon dioxide through photosynthesis, converting it into oxygen and
+              storing carbon in their biomass. We encourage you to participate in tree-planting campaigns</p>
+            <p>b) Supporting Renewable Energy Projects: Transitioning from fossil fuels to renewable energy sources such
+              as solar, wind, and hydroelectric power is important because it helps combat climate change by reducing
+              carbon emissions and air pollution, while also ensuring long-term resource sustainability, economic
+              growth, and energy security.</p>
+            <p>c) Sustainable Practices: Adopting sustainable practices in daily life is significant because it helps
+              conserve natural resources, reduce environmental impacts such as pollution and waste, mitigate climate
+              change, and promote a healthier and more sustainable future for ourselves and future generations.</p>
+            <br />
+            <p>Real-life initiatives in Muslim-majority countries include reforestation programs like "Greening Saudi
+              Arabia" and "Pakistan Billion Tree Tsunami," clean energy projects such as the "Noor Abu Dhabi" solar farm
+              and "Moroccan Solar Power Project," and sustainable agricultural practices like the "Sustainable
+              Agriculture Development Program" and the "Sahel Green Wall" project. These initiatives aim to reduce
+              carbon emissions, combat desertification, and promote renewable energy and sustainable farming practices.
+            </p>
+            <p>Can you think critically and reflect on how you can contribute to recycling carbon emissions in your own
+              life? No matter how small your actions are, You can make a significant difference in addressing
+              environmental challenges.
+            </p>
+            <p>You can start by doing the following:</p>
+            <p>a) Energy Conservation: You can conserve energy by turning off lights, electronics, and appliances when
+              not in use. You can also opt for energy-efficient light bulbs and appliances, reducing our carbon
+              footprint.</p>
+            <p>b) Sustainable Transportation: You can also use eco-friendly transportation options such as walking,
+              cycling, carpooling, or using public transportation whenever possible. This helps reduce carbon emissions
+              from vehicles and promotes a greener commute.</p>
+            <br />
+            <br />
+            <p>Quiz:</p>
+            <p>1.What are carbon emissions?</p>
+            <p>a) The release of greenhouse gases into the atmosphere</p>
+            <p>b) The extraction of fossil fuels from the ground</p>
+            <p>c) The process of photosynthesis in plants</p>
+            <br />
+            <br />
+
+
+            <p>2.According to Islam, what is the responsibility of Muslims towards the environment?</p>
+            <p>a) Exploit natural resources for economic growth</p>
+            <p>b) Preserve and protect the Earth as responsible stewards</p>
+            <p>c) Ignore environmental issues and focus solely on spirituality</p>
+            <br />
+            <br />
+
+            <p>3.Which of the following is NOT an example of recycling carbon emissions?</p>
+            <p>a) Planting trees for reforestation</p>
+            <p>b) Supporting renewable energy projects</p>
+            <p>c) Burning fossil fuels for electricity generation</p>
+            <br />
+            <br />
+
+            <p>4.What is one practical way to reduce carbon emissions in daily life?</p>
+            <p>a) Conserving energy by turning off lights and appliances</p>
+            <p>b) Using cars for every short-distance travel</p>
+            <p>c) Wasting water without considering conservation</p>
+            <br />
+            <br />
+
+            <p>5.True or False: Individual actions in recycling carbon emissions have no impact on the environment.</p>
+            <p>a) True</p>
+            <p>b) False</p>
+            <br />
+          </div>
+        </div>
+
+        <div class="row" style="padding: 2%;">
+          <div id="greenhouse" class="">
+            <p>In the context of Islam, the principles of environmental conservation and stewardship are derived from
+              the Qur'an and the teachings of Prophet Muhammad (peace be upon him). Islam encourages Muslims to live in
+              harmony with the natural world and to fulfill their role as responsible caretakers of the Earth. Reusing
+              carbon dioxide to save the environment can be seen as a manifestation of these Islamic teachings.
+            </p>
+            <p>Here's how the concept can be approached</p>
+            <p>1.Conservation and Avoidance of Waste (Israf): The concept of israf in Islam refers to the prohibition of
+              extravagance and waste. Reusing carbon dioxide aligns with this principle, as it involves finding
+              beneficial uses for a waste product. Instead of allowing carbon dioxide to be emitted into the atmosphere,
+              which contributes to climate change, reusing it for productive purposes reduces waste and promotes
+              responsible resource management.</p>
+            <p>2.Sustainable Development (Mudaraba): Islam encourages balanced and sustainable development that takes
+              into account the needs of both present and future generations. By adopting carbon capture and utilization
+              technologies, Muslims can contribute to sustainable development by reducing carbon dioxide emissions and
+              mitigating climate change impacts. This approach aligns with the Islamic principle of mudaraba, which
+              emphasizes responsible development and the avoidance of actions that harm the environment.</p>
+            </p>
+            <p>Conservation: Islamic teachings encourage the conservation of resources. Carbon dioxide recycling can
+              align with this principle by capturing and reusing or converting carbon dioxide emissions instead of
+              releasing them into the atmosphere. Technologies such as carbon capture and storage (CCS) or carbon
+              capture and utilization (CCU) can help capture CO2 emissions from industrial processes and utilize them
+              for beneficial purposes.
+            </p>
+            <p>
+              Sustainable Practices: Islamic teachings promote sustainable practices that ensure the long-term
+              well-being of the Earth and its inhabitants. Implementing sustainable energy solutions, such as renewable
+              energy sources like solar or wind power, can help reduce reliance on fossil fuels, which contribute to CO2
+              emissions. By promoting and investing in renewable energy, the overall carbon footprint can be
+              significantly reduced.
+            </p>
+            <p>
+              Waste Reduction: Islam encourages minimizing waste and avoiding extravagance. In the context of CO2
+              recycling, it is important to minimize the emission of carbon dioxide in the first place. This can be
+              achieved through energy efficiency measures, such as improving insulation in buildings, optimizing
+              industrial processes, and promoting responsible consumption patterns.
+            </p>
+            <p>
+              Environmental Stewardship: Islamic teachings emphasize the concept of Khalifa, which refers to humanity's
+              role as custodians of the Earth. As custodians, it is our responsibility to protect the environment and
+              work towards its preservation. By investing in research and development of carbon capture technologies and
+              promoting sustainable practices, individuals and communities can fulfill this responsibility and
+              contribute to a healthier planet.
+            </p>
+            <p>
+              Ethical Investment: Islamic principles also emphasize ethical investment and finance. By supporting
+              companies and initiatives that prioritize sustainable practices, clean technologies, and environmental
+              conservation, Muslims can align their investments with their faith and contribute to the development and
+              implementation of carbon dioxide recycling projects.
+            </p>
+            <p>
+              While specific guidelines regarding carbon dioxide recycling may not exist within Islamic teachings, these
+              general principles provide a framework to guide Muslims in addressing environmental challenges, including
+              CO2 emissions, in a responsible and sustainable manner.
+            </p>
+
+
+          </div>
+        </div>
+
+        <div class="row" style="padding: 2%;">
+          <div id="aff" class="">
+            <p>Storing carbon dioxide (CO2) for the future of trees is critical and
+              can be achieved through various methods. Here are a few approaches:
+            </p>
+            <p><b>Afforestation and Reforestation:</b> Planting trees and restoring forests is an effective way to
+              store carbon dioxide. Trees absorb CO2 through photosynthesis and store it in their biomass. By
+              promoting afforestation (establishing new forests in areas without trees) and reforestation
+              (reestablishing forests in areas that were previously forested), we can increase the carbon storage
+              capacity of the Earth.</p>
+            <p><b>Conservation of Existing Forests:</b> Protecting and conserving existing forests is crucial for
+              carbon
+              storage. Old-growth forests and mature trees have the capacity to store significant amounts of carbon
+              over time. Efforts should be made to prevent deforestation and ensure sustainable forest management
+              practices that maintain the health and longevity of forests.</p>
+            <p><b>Soil Carbon Sequestration:</b> Carbon can also be stored in soil through a process known as soil
+              carbon
+              sequestration. This involves enhancing the organic matter content in soil, which increases its ability
+              to retain carbon. Practices such as adding compost or organic amendments, practicing agroforestry
+              (combining trees with agriculture), and implementing conservation agriculture techniques can promote
+              soil carbon sequestration.</p>
+            <p><b>Biochar</b>: Biochar is a type of charcoal produced from biomass (such as agricultural waste)
+              through a
+              process called pyrolysis. It is a stable form of carbon that can be added to soil, promoting long-term
+              carbon storage. Biochar not only sequesters carbon but also enhances soil fertility and water retention,
+              benefiting tree growth and overall ecosystem health.</p>
+            <p><b>Carbon Capture and Storage (CCS)</b>: Large-scale CCS technologies can be used to capture CO2
+              emissions
+              from industrial processes or power plants and store them underground. While this method is not directly
+              related to trees, it helps reduce overall CO2 levels in the atmosphere, which can indirectly benefit
+              forests and trees.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <script>
+    window.onload = myFunction;
+
+    let slideIndex = 0;
+    showSlides();
+
+    function myFunction() {
+      var element = document.getElementById('hima');
+      element.style.display = 'none';
+
+      var element2 = document.getElementById('greenhouse');
+      element2.style.display = 'none';
+      var element3 = document.getElementById('aff');
+      element3.style.display = 'none';
+    }
+
+    function search() {
+      const subject = document.getElementById('subject').value;
+      const gradeLevel = document.getElementById('grade-level').value;
+
+      var lessonPlan = generateLessonPlan(subject, gradeLevel);
+      var videoLink= generateLessonVideo(subject, gradeLevel);
+
+      if (lessonPlan != null) {
+
+        var iframe = document.getElementById("pdfFrame");
+        iframe.src = lessonPlan + ".pdf";
+
+        var myParagraph = document.getElementById("myParagraph");
+        myParagraph.style.display = 'none';
+
+        var iframe = document.getElementById('youtube-video');
+            iframe.src = "https://www.youtube.com/embed/" + videoLink;
+      } else {
+        var myParagraph = document.getElementById("myParagraph");
+        lessonPlan = "Lesson Plan for subject " + subject + " and Grade " + gradeLevel + " is not avilable";
+        myParagraph.textContent = lessonPlan;
+        var iframe = document.getElementById("pdfFrame");
+
+        iframe.style.display = 'none';
+        myParagraph.style.display = 'block';
+
+      }
+
+    };
+
+    
+    function generateLessonVideo(subject, gradeLevel) {
+      let lessonPlan;
+
+      if (subject.toLowerCase().includes('sci') ) {
+       return "V2P6CuHVWvI";
+      } 
+      if (subject.toLowerCase().includes('isl')){
+        return "RjQUyyfiJg8"
+      } 
+      else {
+        lessonPlan = null;
+      }
+
+      return lessonPlan;
+    }
+
+    function generateLessonPlan(subject, gradeLevel) {
+      let lessonPlan;
+
+      if (subject.toLowerCase().includes('sci') && gradeLevel === "2") {
+        return "2nd sci";
+      } else if (subject.toLowerCase().includes('sci') && gradeLevel === "4") {
+        return "4th sci";
+      } else if (subject.toLowerCase().includes('sci') && gradeLevel === "6") {
+        return "6th sci";
+      } else if (subject.toLowerCase().includes('sci') && gradeLevel === "8") {
+        return "8th sci";
+      } 
+      if (subject.toLowerCase().includes('isl') && gradeLevel === "2") {
+        return "2nd islamic";
+      } else if (subject.toLowerCase().includes('isl') && gradeLevel === "4") {
+        return "4th islamic";
+      } else if (subject.toLowerCase().includes('isl') && gradeLevel === "6") {
+        return "6th islamic";
+      } else if (subject.toLowerCase().includes('isl') && gradeLevel === "8") {
+        return "8th islamic";
+      
+       } else if (subject.toLowerCase().includes('isl') && gradeLevel === "12") {
+        return "12th islamic";
+      } 
+      else {
+        lessonPlan = null;
+      }
+
+      return lessonPlan;
+    }
+
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) { slideIndex = 1 }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+      setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+
+    function openTab(event, tabName) {
+      // Hide all tab contents
+      var tabcontents = document.getElementsByClassName("tabcontent");
+      for (var i = 0; i < tabcontents.length; i++) {
+        tabcontents[i].style.display = "none";
+      }
+
+      // Remove "active" class from all tab buttons
+      var tablinks = document.getElementsByClassName("tablinks");
+      for (var i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      // Show the selected tab content
+      document.getElementById(tabName).style.display = "block";
+
+      // Add the "active" class to the clicked button
+      event.currentTarget.className += " active";
+
+    }
+
+    // Set Tab 1 as the default open tab
+    document.getElementById("defaultOpen").click();
+    // Add the "active" class to the clicked button
+
+    function generateResponse() {
+      const userMessage = document.getElementById('userMessage').value.trim();
+      if (!userMessage) {
+        alert('Please enter a message');
+        return;
+      }
+
+      // Set up your OpenAI API key
+      const apiKey = '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';
+
+      // Define the request data
+      const requestData = {
+        model: "gpt-3.5-turbo",
+        messages: [
+          {"role": "user", "content": userMessage}
+        ]
+      };
+
+      // Make a POST request to the OpenAI API
+      axios.post('https://api.openai.com/v1/chat/completions', requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        }
+      })
+      .then(response => {
+        // Display the response
+        const responseText = response.data.choices[0].message.content;
+        document.getElementById('response').innerText = responseText;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error occurred. Please check the console for details.');
+      });
+    }
+
+
+  </script>
+
+</body>
+
+</html>
